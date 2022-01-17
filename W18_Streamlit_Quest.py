@@ -87,26 +87,43 @@ if st.button("Get Cars's statisctics"):
     sns.scatterplot(data=df2,x='hp',y='weightlbs')
     #Plotting
     st.write()
-    st.write("below the heatmap for the selected cars")
-    st.pyplot(fig=cars_heatmap.figure,clear_figure=True)
-    st.write()
+    with st.expander('Please expand to see the plot'):
+        st.title("below the heatmap for the selected cars")
+        st.pyplot(fig=cars_heatmap.figure,clear_figure=True)
+        st.write()
     
-    with st.echo(code_location='below'):
+    with st.expander('Please expand to see the plot'):
         import matplotlib.pyplot as plt
         import seaborn as sns
+        st.title("Horse Power distribution")
         fig = plt.figure()
         sns.histplot(data=df2,x='hp')
         st.write(fig)
-    
-    ## Plotly example
 
-
-    with st.echo(code_location='below'):
+    with st.expander('Please expand to see the plot'):
         import plotly.express as px
+        st.title("Time to 60 & Horse Power animated over the years grouped by continent scatter plot")
+        fig = px.scatter(df2,
+            x=df2["time-to-60"],
+            y=df2["hp"],
+            color="continent",
+            animation_frame="year",
+            range_x=[8,25], range_y=[46,230]
+        )
+        fig.update_layout(
+            xaxis_title="Time to 60",
+            yaxis_title="Horse Power",
+        )
 
-        fig = px.scatter(
+        st.write(fig)
+        
+    with st.expander('Please expand to see the plot'):
+        import plotly.express as px
+        st.title("Horse Power by year with continent grouping")
+        fig = px.scatter(df2,
             x=df2["year"],
             y=df2["hp"],
+            color="continent",
         )
         fig.update_layout(
             xaxis_title="year",
@@ -114,6 +131,5 @@ if st.button("Get Cars's statisctics"):
         )
 
         st.write(fig)
-        
-
-
+if st.button("Last button to click"):
+    st.write("Thank you for checking my streamlit app ;-), Hope you liked it!")
